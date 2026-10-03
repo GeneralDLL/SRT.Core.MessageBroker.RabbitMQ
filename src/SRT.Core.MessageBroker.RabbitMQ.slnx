@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="SRT.Core.csproj" />
+  <Project Path="SRT.Core.MessageBroker.RabbitMQ/SRT.Core.MessageBroker.RabbitMQ.csproj" />
+  <Project Path="../tests/SRT.Core.MessageBroker.RabbitMQ.Tests/SRT.Core.MessageBroker.RabbitMQ.Tests.csproj" />
 </Solution>

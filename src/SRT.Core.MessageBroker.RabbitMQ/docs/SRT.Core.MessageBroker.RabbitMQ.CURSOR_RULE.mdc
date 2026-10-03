@@ -1,0 +1,34 @@
+---
+description: SRT.Core.MessageBroker.RabbitMQ — follow package AI_RULES when using or changing RabbitMQ messaging
+alwaysApply: false
+globs: "**/*MessageBroker*RabbitMQ*/**/*","**/SRT.Core.MessageBroker.RabbitMQ*/**/*","**/docs/SRT.Core.MessageBroker.RabbitMQ.*"
+---
+
+# SRT.Core.MessageBroker.RabbitMQ (Cursor rule template)
+
+This file is an **install template**. Copy it to the consumer project’s `.cursor/rules/` and keep the package-prefixed filename:
+
+`SRT.Core.MessageBroker.RabbitMQ.CURSOR_RULE.mdc`
+
+## Mandatory
+
+Before using or modifying this package, follow:
+
+- `docs/SRT.Core.MessageBroker.RabbitMQ.AI_RULES.md` (canonical)
+- `docs/SRT.Core.MessageBroker.RabbitMQ.API_REFERENCE.md`
+- `docs/SRT.Core.MessageBroker.RabbitMQ.COOKBOOK.md` for host/appsettings
+
+## Working rule
+
+Read docs first. Do not invent APIs. If ambiguous, inspect related code and update the docs.
+
+## Hard constraints (summary)
+
+- Thin host `Program.cs`; no host `UseAuthorization` / `MapControllers`
+- Enable via `lstRabbitMQNamespace` + ProjectReference; configure `ConnectionDB:SRTCore_RabbitMQ`
+- Add `Service.Id` / `Service.Name` to every environment appsettings file
+- Shared `IRabbitConnection`; dispose channels only from publishers/consumers
+- Publish success = confirm + no BasicReturn
+- Rabbit TLS optional: `UseTls = sslEnabled || caPath`; bad/missing `caPath` fails fast
+- Do not copy Redis `tls-auth-clients` into RabbitMQ Docker
+- **Initial RabbitMQ setup:** ask human for TLS yes/no and custom CA vs system trust; placeholder `caPath` (e.g. `tls/ca.pem`) if path unknown
