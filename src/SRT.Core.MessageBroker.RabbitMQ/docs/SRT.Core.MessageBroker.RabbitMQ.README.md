@@ -2,7 +2,9 @@
 
 Package: **SRT.Core.MessageBroker.RabbitMQ**  
 Target: .NET 10 / RabbitMQ.Client 7.1.2  
-Reviewed against: RabbitMQ repo `81dae1d`, Core repo `9381db4`
+Reviewed against: RabbitMQ repo `c999ec7`, Core repo `95b0a5b`
+
+The GitHub homepage is the unprefixed repo-root `README.md`. This file is the **package docs index**.
 
 All filenames in this folder start with `SRT.Core.MessageBroker.RabbitMQ.` so you can copy the whole set into any consumer project without colliding with other packages’ docs.
 

@@ -1,6 +1,6 @@
 # SRT.Core.MessageBroker.RabbitMQ — API Reference
 
-Reviewed: RabbitMQ repo `81dae1d`, Core repo `9381db4`.  
+Reviewed: RabbitMQ repo `c999ec7`, Core repo `95b0a5b`.  
 Prefer this document for consumption. If docs disagree with code, inspect the related source and update this file.
 
 ---
