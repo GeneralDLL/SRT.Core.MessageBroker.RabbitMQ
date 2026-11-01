@@ -1,8 +1,8 @@
 namespace SRT.Core.MessageBroker.RabbitMQ
 {
     /// <summary>
-    /// Bound from appsettings section <c>RabbitMQ</c> (same idea as Redis <c>RedisCache:Prefix</c>).
-    /// Empty Prefix → names are used as declared.
+    /// <see cref="Prefix"/> is set from <c>SRTCore_RabbitMQ.pattern</c> in appsettings
+    /// (same rule as Redis <c>SRTCore_CacheRedis.pattern</c>). Empty → names are used as declared.
     /// </summary>
     public sealed class RabbitMqOptions
     {
@@ -27,10 +27,7 @@ namespace SRT.Core.MessageBroker.RabbitMQ
         {
             if (string.IsNullOrWhiteSpace(prefix))
                 return "";
-            prefix = prefix.Trim();
-            if (prefix.EndsWith(':') || prefix.EndsWith('_') || prefix.EndsWith('-') || prefix.EndsWith('.'))
-                return prefix;
-            return prefix + ":";
+            return SRT.Core.Domain.GeneralConnectionString.NormalizePattern(prefix);
         }
     }
 }

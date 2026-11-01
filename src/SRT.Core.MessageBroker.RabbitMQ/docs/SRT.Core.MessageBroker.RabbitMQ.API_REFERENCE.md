@@ -70,15 +70,15 @@ Task<IChannel> CreateChannelAsync(CreateChannelOptions? options = null, Cancella
 
 - Singleton; single-flight connect; up to 3 cancelable initial retries.
 - Owns the shared `IConnection`. Publishers/consumers must not dispose it.
-- `Prefix` / `ApplyNamePrefix` come from `RabbitMqOptions` (`RabbitMQ:Prefix` in appsettings). Empty Prefix leaves declared names unchanged.
+- `Prefix` / `ApplyNamePrefix` come from `RabbitMqOptions`, filled from `ConnectionDB:SRTCore_RabbitMQ.pattern`. Empty Prefix leaves declared names unchanged.
 
 ### `RabbitMqOptions`
 
-Bound from section `RabbitMQ` (same pattern as Redis `RedisCache:Prefix`).
+`Prefix` is set from `SRTCore_RabbitMQ.pattern` (the `RabbitMQ` section is no longer read). Same rule as Redis `SRTCore_CacheRedis.pattern` and `GeneralConnectionString.NormalizePattern`.
 
 | Member | Behavior |
 |--------|----------|
-| `Prefix` | Raw appsettings value; empty = no prefix |
+| `Prefix` | Raw `SRTCore_RabbitMQ.pattern`; empty = no prefix |
 | `NormalizedPrefix` | Trim; if missing trailing `:`, `_`, `-`, or `.`, append `:` |
 | `ApplyPrefix(name)` | Prepends `NormalizedPrefix` unless name is empty or already starts with it |
 

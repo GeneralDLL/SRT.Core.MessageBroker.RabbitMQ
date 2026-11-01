@@ -47,7 +47,7 @@ MUST:
 - Keep `Program.cs` thin (`SRT_ConfigController` → `SRT_ConfigBuilder` → `SRT_ConfigBuilderAndBuildApp` → `SRT_ConfigApp`).
 - Project-reference this package so `RabbitMqBasicConfigurations` is discovered.
 - Configure `ConnectionDB:SRTCore_RabbitMQ` when `lstRabbitMQNamespace` is non-empty.
-- If the host has `RabbitMQ:Prefix` in appsettings, leave it; the plugin applies it to queue/exchange names. Do not hardcode a second prefix in publisher/consumer type names. Empty/missing Prefix is valid.
+- Set `ConnectionDB:SRTCore_RabbitMQ.pattern` (for example `shop`); the plugin applies `pattern:` to queue/exchange names. The old `RabbitMQ:Prefix` section is no longer read. Do not hardcode a second prefix in publisher/consumer type names. Empty/missing Prefix is valid.
 - Treat Rabbit TLS as optional: `UseTls = sslEnabled || caPath`; plaintext when both absent/empty.
 - When `caPath` is set, fail fast on missing/invalid PEM; never fall back to plaintext after a TLS config error.
 - Prefer durable queues/exchanges for production topology; do **not** change package defaults of existing `QueueData`/`ExchangeData` if that would break declared brokers (`PRECONDITION_FAILED`).

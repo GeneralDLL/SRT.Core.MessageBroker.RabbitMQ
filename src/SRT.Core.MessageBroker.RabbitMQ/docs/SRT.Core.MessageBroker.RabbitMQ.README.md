@@ -48,7 +48,7 @@ Consumers MUST add Service.Id / Service.Name to every environment appsettings fi
 Enable plugin via lstRabbitMQNamespace + ProjectReference; ConnectionDB:SRTCore_RabbitMQ.host required.
 Initial RabbitMQ setup: ask human for TLS yes/no and custom CA vs system trust; if TLS and path unknown use placeholder caPath (tls/ca.pem).
 Shared IRabbitConnection; publishers/consumers own channels only. Publish success = confirm + no BasicReturn.
-Optional RabbitMQ:Prefix in appsettings is applied to queue/exchange names (Redis-style); empty Prefix is a no-op.
+Optional SRTCore_RabbitMQ.pattern is applied to queue/exchange names (same as Redis SRTCore_CacheRedis.pattern); empty is a no-op.
 ```
 
 ## Loading note

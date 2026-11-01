@@ -49,4 +49,13 @@ public class RabbitMqPrefixTests
         Assert.Equal("srt:test:", conn.Prefix);
         Assert.Equal("srt:test:demo", conn.ApplyNamePrefix("demo"));
     }
+
+    [Fact]
+    public void Pattern_from_connection_matches_options_prefix()
+    {
+        var cfg = new SRT.Core.Domain.GeneralConnectionString { pattern = "shop" };
+        var opts = new RabbitMqOptions { Prefix = cfg.pattern };
+        Assert.Equal("shop:", opts.NormalizedPrefix);
+        Assert.Equal(cfg.ApplyPattern("orders"), opts.ApplyPrefix("orders"));
+    }
 }

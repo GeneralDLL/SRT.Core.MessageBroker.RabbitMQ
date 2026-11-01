@@ -84,16 +84,14 @@ For AIs wiring RabbitMQ the first time: stop and ask for TLS yes/no and custom C
       "user": "guest",
       "pass": "guest",
       "virtualHost": "/",
-      "sslEnabled": "false"
+      "sslEnabled": "false",
+      "pattern": "srt:test:"
     }
-  },
-  "RabbitMQ": {
-    "Prefix": "srt:test:"
   }
 }
 ```
 
-Omit `RabbitMQ:Prefix` (or set it empty) to use declared queue/exchange names as-is. When set, the plugin prepends it (adds a trailing `:` if the value has no `:`, `_`, `-`, or `.` suffix), matching Redis `RedisCache:Prefix`.
+Omit `SRTCore_RabbitMQ.pattern` (or set it empty) to use declared queue/exchange names as-is. When set, the plugin prepends it (adds a trailing `:` if the value has no `:`, `_`, `-`, or `.` suffix), matching Redis `SRTCore_CacheRedis.pattern`. The old `RabbitMQ:Prefix` section is no longer read.
 
 ### TLS with private CA (5671)
 

@@ -28,13 +28,13 @@ Config binds from `ConnectionDB:SRTCore_RabbitMQ` (`GeneralConnectionString`):
 - Missing/invalid `caPath` → fail fast (no plaintext fallback).
 - `sslEnabled` without `caPath` → TLS with OS trust store.
 
-Optional name prefix (like Redis `RedisCache:Prefix`) from a sibling section:
+Optional name prefix (same as Redis `SRTCore_CacheRedis.pattern`) inside the connection block:
 
 ```json
-"RabbitMQ": { "Prefix": "srt:test:" }
+"SRTCore_RabbitMQ": { ..., "pattern": "shop" }
 ```
 
-When non-empty, declared queue and exchange names (and RPC reply queues) are prefixed at runtime. Routing keys are not prefixed. Empty/missing Prefix is a no-op.
+When non-empty, declared queue and exchange names (and RPC reply queues) are prefixed at runtime. Routing keys are not prefixed. Empty/missing pattern is a no-op. The old `RabbitMQ:Prefix` section is no longer read.
 
 Publishers and consumers create **their own channels** from the shared connection. Disposing a publisher/consumer closes only its channel.
 

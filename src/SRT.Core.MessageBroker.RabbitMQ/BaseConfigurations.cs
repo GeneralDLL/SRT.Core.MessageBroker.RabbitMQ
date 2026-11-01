@@ -20,8 +20,9 @@ namespace SRT.Core.MessageBroker.RabbitMQ
             var rabbitCfg = config.ConnectionStrings.SRTCore_RabbitMQ;
             var contentRoot = builder.Environment.ContentRootPath;
 
-            var rabbitOptions = new RabbitMqOptions();
-            builder.Configuration.GetSection("RabbitMQ").Bind(rabbitOptions);
+            // Queue and exchange names start with SRTCore_RabbitMQ.pattern.
+            // The old RabbitMQ:Prefix section is no longer read.
+            var rabbitOptions = new RabbitMqOptions { Prefix = rabbitCfg.pattern };
             builder.Services.AddSingleton(rabbitOptions);
 
             builder.Services.AddSingleton<IRabbitConnection>(sp =>
@@ -35,14 +36,23 @@ namespace SRT.Core.MessageBroker.RabbitMQ
                     sp.GetRequiredService<RabbitMqOptions>());
             });
 
+            var consumers = 0;
+            var publishers = 0;
             foreach (var configItem in config.lstRabbitMQNamespace)
             {
                 var lstType = RegisterServicesByType.SRT_GetTypes<IConsumerMessage>(configItem);
+                consumers += lstType.Count;
                 RabbitMQConsumerConfig(builder, lstType, builder.SRT_GetLogger());
 
                 lstType = RegisterServicesByType.SRT_GetTypes<IPublisherMessage>(configItem);
+                publishers += lstType.Count;
                 RabbitMQPublisherConfig(builder, lstType, builder.SRT_GetLogger());
             }
+
+            config.StartupReport.Info(
+                "rabbitmq",
+                $"{rabbitCfg.host}:{rabbitCfg.GetRabbitMqPort()} vhost={rabbitCfg.GetVirtualHost()} user={rabbitCfg.user} " +
+                $"pattern={rabbitCfg.pattern} tls={rabbitCfg.UseTls} consumers={consumers} publishers={publishers}");
 
             await Task.Delay(1);
             return builder;
